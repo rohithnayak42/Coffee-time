@@ -11,7 +11,7 @@ export default function TodaysSpecial() {
 
   return (
     <section className="py-16">
-      <div className="container mx-auto px-6">
+      <div className="container mx-auto">
         <div className="flex items-center gap-4 mb-10">
           <h2 className="text-3xl md:text-4xl font-bold text-white flex items-center gap-3">
             <span className="text-4xl">🔥</span> Today's Special

@@ -5,7 +5,7 @@ import { FaInstagram, FaWhatsapp } from 'react-icons/fa';
 export default function About() {
   return (
     <section id="about" className="py-24 bg-light-bg">
-      <div className="container mx-auto px-6">
+      <div className="container mx-auto">
         <div className="grid md:grid-cols-2 gap-10 md:gap-16 items-center">
           <motion.div
             initial={{ opacity: 0, x: -50 }}

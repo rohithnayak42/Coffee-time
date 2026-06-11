@@ -83,7 +83,7 @@ export default function Checkout() {
 
   return (
     <div className="min-h-screen bg-primary-maroon pt-28 pb-20">
-      <div className="container mx-auto px-6 max-w-6xl">
+      <div className="container mx-auto max-w-6xl">
         <button onClick={() => navigate('/order')} className="flex items-center gap-2 text-gray-400 hover:text-white mb-8 transition-colors">
           <ChevronLeft size={20} /> Back to Menu
         </button>

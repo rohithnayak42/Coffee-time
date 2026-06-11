@@ -78,7 +78,7 @@ export default function Order() {
     <div className="min-h-screen bg-primary-maroon pt-28 pb-20 font-sans relative">
       
       {/* Back Button */}
-      <div className="container mx-auto px-6 mb-6">
+      <div className="container mx-auto mb-6">
         <button 
           onClick={() => navigate('/')}
           className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/5 hover:bg-white/10 backdrop-blur-md border border-white/10 hover:border-accent-orange text-white rounded-full font-medium transition-all duration-300 shadow-lg group"
@@ -89,7 +89,7 @@ export default function Order() {
       </div>
 
       {/* Hero Banner */}
-      <section className="container mx-auto px-6 mb-12">
+      <section className="container mx-auto mb-12">
         <motion.div 
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -117,7 +117,7 @@ export default function Order() {
       </section>
 
       {/* Catalog Section */}
-      <section className="container mx-auto px-6" id="catalog">
+      <section className="container mx-auto" id="catalog">
         
         {/* Controls */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-10">

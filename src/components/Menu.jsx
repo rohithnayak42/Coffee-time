@@ -61,7 +61,7 @@ const menuItems = [
 export default function Menu() {
   return (
     <section id="menu" className="py-24 bg-dark-menu">
-      <div className="container mx-auto px-6 text-center">
+      <div className="container mx-auto text-center">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}

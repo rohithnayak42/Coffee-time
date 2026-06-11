@@ -21,7 +21,7 @@ export default function Gallery() {
 
   return (
     <section id="gallery" className="py-24 bg-white">
-      <div className="container mx-auto px-6">
+      <div className="container mx-auto">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}

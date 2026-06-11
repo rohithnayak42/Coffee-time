@@ -68,7 +68,7 @@ export default function Navbar() {
 
   return (
     <nav className={`fixed top-0 w-full z-40 transition-all duration-300 ${isScrolled ? 'bg-primary-maroon shadow-lg py-3' : 'bg-primary-maroon py-5'}`}>
-      <div className="container mx-auto px-6 flex items-center justify-between">
+      <div className="container mx-auto flex items-center justify-between">
         <div className="flex items-center gap-2 cursor-pointer" onClick={() => handleNavClick('Home')}>
           <Coffee size={32} className="text-white" />
           <span className="text-white text-2xl font-bold tracking-wider">Coffee</span>
