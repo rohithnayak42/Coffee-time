@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, SlidersHorizontal, ArrowLeft } from 'lucide-react';
-import { categories } from '../data/products';
+import { categories, products as staticProducts } from '../data/products';
 import ProductCard from './shop/ProductCard';
 import { useNavigate } from 'react-router-dom';
 
@@ -34,16 +34,20 @@ export default function Order() {
   const [allProducts, setAllProducts] = useState([]);
   const navigate = useNavigate();
 
-  // Fetch products from PostgreSQL via backend API
+  // Fetch products from PostgreSQL via backend API, fallback to static data
   useEffect(() => {
     fetch('http://localhost:5000/api/products')
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+        return res.json();
+      })
       .then(data => {
         setAllProducts(data);
         setIsLoading(false);
       })
       .catch(err => {
-        console.error('Failed to fetch products:', err);
+        console.warn('Failed to fetch products from API, falling back to static products:', err);
+        setAllProducts(staticProducts);
         setIsLoading(false);
       });
   }, []);
