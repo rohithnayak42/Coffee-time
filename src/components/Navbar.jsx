@@ -75,12 +75,12 @@ export default function Navbar() {
         </div>
 
         {/* Desktop Menu */}
-        <div className="hidden md:flex items-center gap-6">
+        <div className="hidden md:flex items-center gap-4 lg:gap-6">
           {navItems.map((item) => (
             <button
               key={item}
               onClick={() => handleNavClick(item)}
-              className={`px-5 py-2 rounded-full transition-all duration-300 ${
+              className={`px-3 lg:px-5 py-2 rounded-full transition-all duration-300 text-sm lg:text-base ${
                 (!isOrderPage && active === item)
                   ? 'bg-accent-orange text-white'
                   : 'text-gray-300 hover:text-white hover:bg-white/10'
@@ -90,16 +90,28 @@ export default function Navbar() {
             </button>
           ))}
           
-          <button 
-            onClick={() => navigate('/order')}
-            className={`px-5 py-2 rounded-full font-semibold transition-all duration-300 ${
-              isOrderPage
-                ? 'bg-accent-orange text-white shadow-[0_0_15px_rgba(245,166,35,0.4)] scale-105'
-                : 'bg-white/10 hover:bg-white/20 text-white'
-            }`}
-          >
-            Order Online
-          </button>
+          <div className="flex items-center gap-2 border-l border-white/10 pl-4 lg:pl-6 ml-2">
+            <button 
+              onClick={() => navigate('/my-orders')}
+              className={`px-4 py-2 rounded-full font-medium transition-all duration-300 text-sm lg:text-base ${
+                location.pathname === '/my-orders'
+                  ? 'bg-white/20 text-white'
+                  : 'text-gray-300 hover:text-white hover:bg-white/10'
+              }`}
+            >
+              My Orders
+            </button>
+            <button 
+              onClick={() => navigate('/order')}
+              className={`px-4 lg:px-5 py-2 rounded-full font-semibold transition-all duration-300 text-sm lg:text-base ${
+                isOrderPage
+                  ? 'bg-accent-orange text-white shadow-[0_0_15px_rgba(245,166,35,0.4)] scale-105'
+                  : 'bg-white/10 hover:bg-white/20 text-white'
+              }`}
+            >
+              Order Online
+            </button>
+          </div>
         </div>
 
         <div className="flex items-center gap-4">
@@ -148,6 +160,17 @@ export default function Navbar() {
                 {item}
               </button>
             ))}
+            <button 
+              onClick={() => {
+                setIsMobileMenuOpen(false);
+                navigate('/my-orders');
+              }}
+              className={`px-6 py-2 rounded-full w-3/4 font-semibold ${
+                location.pathname === '/my-orders' ? 'bg-white/20 text-white' : 'bg-transparent border border-white/20 text-white'
+              }`}
+            >
+              My Orders
+            </button>
             <button 
               onClick={() => {
                 setIsMobileMenuOpen(false);

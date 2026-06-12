@@ -13,6 +13,8 @@ import Footer from './components/Footer';
 import Order from './components/Order';
 import Checkout from './components/Checkout';
 import OrderConfirmation from './components/OrderConfirmation';
+import TrackOrder from './components/TrackOrder';
+import MyOrders from './components/MyOrders';
 import CartDrawer from './components/shop/CartDrawer';
 
 const PageTransition = ({ children }) => (
@@ -53,6 +55,8 @@ function App() {
             <Route path="/order" element={<PageTransition><Order /></PageTransition>} />
             <Route path="/checkout" element={<PageTransition><Checkout /></PageTransition>} />
             <Route path="/order-confirmation" element={<PageTransition><OrderConfirmation /></PageTransition>} />
+            <Route path="/track-order" element={<PageTransition><TrackOrder /></PageTransition>} />
+            <Route path="/my-orders" element={<PageTransition><MyOrders /></PageTransition>} />
           </Routes>
         </AnimatePresence>
         <Footer />

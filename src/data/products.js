@@ -212,7 +212,7 @@ export const products = [
     description: 'Classic rich Madagascar vanilla bean ice cream.',
     price: 3.00,
     rating: 4.5,
-    image: 'https://images.unsplash.com/photo-1570197781417-0e82375c9371?w=800&h=600&fit=crop',
+    image: '/images/vanilla_scoop.png',
     isSpecial: false,
     available: true
   },
@@ -223,7 +223,7 @@ export const products = [
     description: 'Double dark chocolate ice cream, extremely creamy.',
     price: 3.50,
     rating: 4.7,
-    image: 'https://images.unsplash.com/photo-1563805042-7684c8e9e1cb?w=800&h=600&fit=crop',
+    image: '/images/chocolate_scoop.png',
     isSpecial: false,
     available: true
   },
@@ -234,7 +234,7 @@ export const products = [
     description: 'Sweet butterscotch with crunchy praline bits.',
     price: 4.00,
     rating: 4.6,
-    image: 'https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?w=800&h=600&fit=crop',
+    image: 'https://images.unsplash.com/photo-1501443762994-82bd5dace89a?w=800&h=600&fit=crop',
     isSpecial: false,
     available: true
   },
@@ -248,6 +248,28 @@ export const products = [
     image: 'https://images.unsplash.com/photo-1580915411954-282cb1b0d780?w=800&h=600&fit=crop',
     isSpecial: true,
     originalPrice: 6.50,
+    available: true
+  },
+  {
+    id: 'ic-5',
+    name: 'Strawberry Delight',
+    category: 'Ice Cream',
+    description: 'Premium strawberry ice cream made with real fresh berries.',
+    price: 4.50,
+    rating: 4.8,
+    image: 'https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?w=800&h=600&fit=crop',
+    isSpecial: false,
+    available: true
+  },
+  {
+    id: 'ic-6',
+    name: 'Coffee Ice Cream',
+    category: 'Ice Cream',
+    description: 'Premium coffee-flavored ice cream with espresso notes.',
+    price: 4.50,
+    rating: 4.7,
+    image: 'https://images.unsplash.com/photo-1557142046-c704a3adf364?w=800&h=600&fit=crop',
+    isSpecial: false,
     available: true
   },
 
@@ -270,7 +292,7 @@ export const products = [
     description: 'Oven-toasted baguette slices with garlic herb butter.',
     price: 4.00,
     rating: 4.6,
-    image: 'https://images.unsplash.com/photo-1573140247632-f8fd74997d5c?w=800&h=600&fit=crop',
+    image: '/images/garlic_bread.png',
     isSpecial: false,
     available: true
   },
@@ -281,7 +303,7 @@ export const products = [
     description: 'Soft muffin packed with fresh blueberries and topped with streusel.',
     price: 3.50,
     rating: 4.7,
-    image: 'https://images.unsplash.com/photo-1605296867304-46d5465a13f1?w=800&h=600&fit=crop',
+    image: '/images/blueberry_muffin.png',
     isSpecial: false,
     available: true
   },

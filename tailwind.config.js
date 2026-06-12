@@ -15,8 +15,6 @@ export default {
         xl: '3.75rem',      // 60px for large screens
       },
       screens: {
-        sm: '100%',
-        md: '100%',
         lg: '1024px',
         xl: '1280px',
         '2xl': '1360px', // max-width of 1360px

@@ -1,7 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Star, Heart, ShoppingBag, Check } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
+
+const categoryFallbacks = {
+  'Hot Coffee': '/images/coffee_fallback.png',
+  'Cold Coffee': '/images/coffee_fallback.png',
+  'Desserts': '/images/dessert_fallback.png',
+  'Ice Cream': '/images/ice_cream_fallback.png',
+  'Bakery': '/images/bakery_fallback.png',
+  'Coffee Beans': '/images/coffee_fallback.png',
+  'Refreshments': '/images/coffee_fallback.png',
+  'default': '/images/bakery_fallback.png'
+};
 
 const cardVariants = {
   hidden: { opacity: 0, y: 30, scale: 0.95 },
@@ -19,6 +30,17 @@ export default function ProductCard({ product }) {
   const isWishlisted = wishlist.includes(product.id);
   const inCart = cartItems.find(item => item.id === product.id);
 
+  const [imgSrc, setImgSrc] = useState(product.image || categoryFallbacks[product.category] || categoryFallbacks.default);
+  const [imgLoaded, setImgLoaded] = useState(false);
+  const [imgError, setImgError] = useState(false);
+
+  const handleError = () => {
+    if (!imgError) {
+      setImgError(true);
+      setImgSrc(categoryFallbacks[product.category] || categoryFallbacks.default);
+    }
+  };
+
   const handleAddToCart = () => {
     addToCart(product);
     setIsCartOpen(true);
@@ -29,14 +51,20 @@ export default function ProductCard({ product }) {
       variants={cardVariants}
       className="bg-black/40 backdrop-blur-xl rounded-2xl overflow-hidden border border-white/5 hover:border-accent-orange/50 shadow-xl hover:shadow-[0_0_25px_rgba(245,166,35,0.25)] transition-all duration-300 group flex flex-col h-full hover:-translate-y-1.5 relative"
     >
-      <div className="relative h-56 overflow-hidden rounded-t-2xl">
+      <div className="relative h-56 overflow-hidden rounded-t-2xl bg-white/5">
+        {!imgLoaded && (
+          <div className="absolute inset-0 bg-white/10 animate-pulse z-0"></div>
+        )}
+        
         {/* Glass reflection overlay */}
         <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/10 to-transparent z-10 pointer-events-none mix-blend-overlay"></div>
         
         <img 
-          src={product.image} 
+          src={imgSrc} 
           alt={product.name} 
-          className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+          onLoad={() => setImgLoaded(true)}
+          onError={handleError}
+          className={`w-full h-full object-cover transition-all duration-700 ease-out group-hover:scale-110 relative z-0 ${imgLoaded ? 'opacity-100' : 'opacity-0'}`}
         />
         
         <button 
