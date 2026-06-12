@@ -1,9 +1,16 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import { Sparkles } from 'lucide-react';
+import AIRecommendation from './AIRecommendation';
+import { useAuth } from '../context/AuthContext';
+import AuthPromptModal from './auth/AuthPromptModal';
 
 export default function Hero() {
+  const [isAiQuizOpen, setIsAiQuizOpen] = React.useState(false);
+  const [showAuthPrompt, setShowAuthPrompt] = React.useState(false);
   const navigate = useNavigate();
+  const { currentUser } = useAuth();
 
   // Coffee bean SVG component for floating beans
   const FloatingBean = ({ className, delay, yOff }) => (
@@ -41,9 +48,12 @@ export default function Hero() {
           <p className="text-gray-200 text-lg md:text-xl mb-8 max-w-lg font-light leading-relaxed">
             Indulge in our masterfully roasted blends. Every sip is crafted to awaken your senses and elevate your day.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start mb-6">
             <button 
-              onClick={() => navigate('/order')}
+              onClick={() => {
+                if (!currentUser) setShowAuthPrompt(true);
+                else navigate('/order');
+              }}
               className="bg-accent-orange hover:bg-orange-500 text-white px-8 py-3 rounded-full font-bold shadow-lg shadow-orange-500/30 transition-all hover:-translate-y-1 hover:shadow-orange-500/50"
             >
               Order Now
@@ -55,6 +65,14 @@ export default function Hero() {
               Explore Menu
             </a>
           </div>
+          
+          <button 
+            onClick={() => setIsAiQuizOpen(true)}
+            className="flex items-center gap-2 justify-center md:justify-start mx-auto md:mx-0 text-accent-orange font-bold hover:text-orange-500 transition-colors group"
+          >
+            <Sparkles size={20} className="group-hover:rotate-12 transition-transform" />
+            Find Your Perfect Coffee using AI
+          </button>
         </motion.div>
 
         <motion.div 
@@ -82,6 +100,9 @@ export default function Hero() {
           />
         </motion.div>
       </div>
+
+      {isAiQuizOpen && <AIRecommendation onClose={() => setIsAiQuizOpen(false)} />}
+      <AuthPromptModal isOpen={showAuthPrompt} onClose={() => setShowAuthPrompt(false)} />
     </section>
   );
 }

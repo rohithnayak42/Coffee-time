@@ -2,14 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useCart } from '../context/CartContext';
 import { useNavigate } from 'react-router-dom';
-import { ChevronLeft, CreditCard, Banknote, ShieldCheck, MapPin, Loader2, CheckCircle, Smartphone } from 'lucide-react';
+import { ChevronLeft, CreditCard, Banknote, ShieldCheck, MapPin, Loader2, CheckCircle, Smartphone, Tag } from 'lucide-react';
 
 export default function Checkout() {
   const { cartItems, cartTotal, gst, clearCart } = useCart();
   const navigate = useNavigate();
 
+  const [promoCode, setPromoCode] = useState('');
+  const [discount, setDiscount] = useState(0);
+  const [promoMessage, setPromoMessage] = useState('');
+
   const DELIVERY_FEE = cartTotal > 0 ? 2.50 : 0;
-  const grandTotal = cartTotal + gst + DELIVERY_FEE;
+  const grandTotal = cartTotal + gst + DELIVERY_FEE - discount;
 
   const [formData, setFormData] = useState({
     name: '', phone: '', email: '', address: '', city: '', pincode: ''
@@ -80,6 +84,19 @@ export default function Checkout() {
       setIsLocating(false);
       alert("Location permission denied or unavailable. Please enter manually.");
     });
+  };
+
+  const handleApplyPromo = () => {
+    if (promoCode.toUpperCase() === 'WELCOME50' && cartTotal > 10) {
+      setDiscount(5);
+      setPromoMessage('Discount applied successfully: $5.00 off!');
+    } else if (promoCode.toUpperCase() === 'COFFEE20') {
+      setDiscount(cartTotal * 0.20);
+      setPromoMessage('Discount applied successfully: 20% off!');
+    } else {
+      setDiscount(0);
+      setPromoMessage('Invalid or expired promo code.');
+    }
   };
 
   const handleSimulatePayment = () => {
@@ -373,22 +390,51 @@ export default function Checkout() {
                 ))}
               </div>
 
-              <div className="border-t border-white/10 pt-4 space-y-3 mb-6">
-                <div className="flex justify-between text-gray-400 text-sm">
-                  <span>Subtotal</span>
-                  <span className="text-white">${cartTotal.toFixed(2)}</span>
+              <div className="border-t border-white/10 pt-4 mb-6">
+                <div className="flex gap-2 mb-4">
+                  <div className="relative flex-1">
+                    <Tag size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                    <input 
+                      type="text" 
+                      placeholder="Promo Code (e.g. WELCOME50)" 
+                      value={promoCode}
+                      onChange={(e) => setPromoCode(e.target.value)}
+                      className="w-full bg-white/5 border border-white/10 rounded-xl py-2.5 pl-10 pr-4 text-white text-sm focus:border-accent-orange outline-none uppercase"
+                    />
+                  </div>
+                  <button onClick={handleApplyPromo} className="bg-white/10 hover:bg-white/20 px-4 py-2 rounded-xl text-white font-bold text-sm transition-colors">
+                    Apply
+                  </button>
                 </div>
-                <div className="flex justify-between text-gray-400 text-sm">
-                  <span>GST (5%)</span>
-                  <span className="text-white">${gst.toFixed(2)}</span>
-                </div>
-                <div className="flex justify-between text-gray-400 text-sm">
-                  <span>Delivery Fee</span>
-                  <span className="text-white">${DELIVERY_FEE.toFixed(2)}</span>
-                </div>
-                <div className="flex justify-between text-white text-lg font-bold pt-3 border-t border-white/10">
-                  <span>Grand Total</span>
-                  <span className="text-accent-orange">${grandTotal.toFixed(2)}</span>
+                {promoMessage && (
+                  <p className={`text-xs mb-4 ${discount > 0 ? 'text-green-400' : 'text-red-400'}`}>
+                    {promoMessage}
+                  </p>
+                )}
+
+                <div className="space-y-3">
+                  <div className="flex justify-between text-gray-400 text-sm">
+                    <span>Subtotal</span>
+                    <span className="text-white">${cartTotal.toFixed(2)}</span>
+                  </div>
+                  <div className="flex justify-between text-gray-400 text-sm">
+                    <span>GST (5%)</span>
+                    <span className="text-white">${gst.toFixed(2)}</span>
+                  </div>
+                  <div className="flex justify-between text-gray-400 text-sm">
+                    <span>Delivery Fee</span>
+                    <span className="text-white">${DELIVERY_FEE.toFixed(2)}</span>
+                  </div>
+                  {discount > 0 && (
+                    <div className="flex justify-between text-green-400 text-sm font-bold">
+                      <span>Discount</span>
+                      <span>-${discount.toFixed(2)}</span>
+                    </div>
+                  )}
+                  <div className="flex justify-between text-white text-lg font-bold pt-3 border-t border-white/10">
+                    <span>Grand Total</span>
+                    <span className="text-accent-orange">${grandTotal.toFixed(2)}</span>
+                  </div>
                 </div>
               </div>
 

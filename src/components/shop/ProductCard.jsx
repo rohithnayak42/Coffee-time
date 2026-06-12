@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Star, Heart, ShoppingBag, Check } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
+import ProductDetailsModal from './ProductDetailsModal';
 
 const categoryFallbacks = {
   'Hot Coffee': '/images/coffee_fallback.png',
@@ -33,6 +34,7 @@ export default function ProductCard({ product }) {
   const [imgSrc, setImgSrc] = useState(product.image || categoryFallbacks[product.category] || categoryFallbacks.default);
   const [imgLoaded, setImgLoaded] = useState(false);
   const [imgError, setImgError] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleError = () => {
     if (!imgError) {
@@ -47,10 +49,12 @@ export default function ProductCard({ product }) {
   };
 
   return (
-    <motion.div 
-      variants={cardVariants}
-      className="bg-black/40 backdrop-blur-xl rounded-2xl overflow-hidden border border-white/5 hover:border-accent-orange/50 shadow-xl hover:shadow-[0_0_25px_rgba(245,166,35,0.25)] transition-all duration-300 group flex flex-col h-full hover:-translate-y-1.5 relative"
-    >
+    <>
+      <motion.div 
+        variants={cardVariants}
+        onClick={() => setIsModalOpen(true)}
+        className="bg-black/40 backdrop-blur-xl rounded-2xl overflow-hidden border border-white/5 hover:border-accent-orange/50 shadow-xl hover:shadow-[0_0_25px_rgba(245,166,35,0.25)] transition-all duration-300 group flex flex-col h-full hover:-translate-y-1.5 relative cursor-pointer"
+      >
       <div className="relative h-56 overflow-hidden rounded-t-2xl bg-white/5">
         {!imgLoaded && (
           <div className="absolute inset-0 bg-white/10 animate-pulse z-0"></div>
@@ -112,7 +116,10 @@ export default function ProductCard({ product }) {
           </div>
 
           <button 
-            onClick={handleAddToCart}
+            onClick={(e) => {
+              e.stopPropagation();
+              handleAddToCart();
+            }}
             className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold transition-all duration-300 shadow-lg active:scale-[0.98] ${
               inCart 
                 ? 'bg-green-500 hover:bg-green-600 text-white shadow-green-500/25' 
@@ -126,7 +133,14 @@ export default function ProductCard({ product }) {
             )}
           </button>
         </div>
-      </div>
-    </motion.div>
+        </div>
+      </motion.div>
+
+      <ProductDetailsModal 
+        product={product} 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
+      />
+    </>
   );
 }
